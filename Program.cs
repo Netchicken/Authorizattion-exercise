@@ -1,5 +1,6 @@
 using Authorizattion_exercise.Data;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,11 +12,44 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+
+//added .AddRoles<IdentityRole>()
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
 
+//Set the fallback authorization policy to require users to be authenticated: The fallback authorization policy requires all users to be authenticated, except for Razor Pages, controllers, or action methods with an authorization attribute. For example, Razor Pages, controllers, or action methods with [AllowAnonymous] or [Authorize(PolicyName="MyPolicy")] use the applied authorization attribute rather than the fallback authorization policy.
+builder.Services.AddAuthorization(options =>
+{
+    //Setting the fallback policy is the preferred way to require all users be authenticated.
+    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
+});
+
+
+
 var app = builder.Build();
+
+
+//If a strong password is not specified, an exception is thrown when SeedData.Initialize is called.
+//Update the app to use the test password:
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<ApplicationDbContext>();
+    context.Database.Migrate();
+    // requires using Microsoft.Extensions.Configuration;
+    // Set password with the Secret Manager tool.
+    // dotnet user-secrets set SeedUserPW <pw>
+
+    var testUserPw = builder.Configuration.GetValue<string>("SeedUserPW");
+
+    await SeedData.Initialize(services, testUserPw);
+}
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
