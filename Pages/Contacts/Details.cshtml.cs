@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
+﻿using Authorizattion_exercise.Authorization;
 using Authorizattion_exercise.Data;
 using Authorizattion_exercise.Models;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Authorizattion_exercise.Pages.Contacts
 {
@@ -23,26 +20,55 @@ namespace Authorizattion_exercise.Pages.Contacts
            : base(context, authorizationService, userManager)
         {
         }
-
+        [BindProperty]
         public Contact Contact { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
-            if (id == null || _context.Contact == null)
-            {
-                return NotFound();
-            }
 
-            var contact = await _context.Contact.FirstOrDefaultAsync(m => m.ContactId == id);
+
+        public async Task<IActionResult> OnPostAsync(int id, ContactStatus status)
+        {
+            var contact = await Context.Contact.FirstOrDefaultAsync(
+                                                      m => m.ContactId == id);
+
             if (contact == null)
             {
                 return NotFound();
             }
-            else 
+
+            var contactOperation = (status == ContactStatus.Approved)
+                                                       ? ContactOperations.Approve
+                                                       : ContactOperations.Reject;
+
+            var isAuthorized = await AuthorizationService.AuthorizeAsync(User, contact,
+                                        contactOperation);
+            if (!isAuthorized.Succeeded)
             {
-                Contact = contact;
+                return Forbid();
             }
-            return Page();
+            contact.Status = status;
+            Context.Contact.Update(contact);
+            await Context.SaveChangesAsync();
+
+            return RedirectToPage("./Index");
         }
+
+        //public async Task<IActionResult> OnGetAsync(int? id)
+        //{
+        //    if (id == null || _context.Contact == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var contact = await _context.Contact.FirstOrDefaultAsync(m => m.ContactId == id);
+        //    if (contact == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    else 
+        //    {
+        //        Contact = contact;
+        //    }
+        //    return Page();
+        //}
     }
 }

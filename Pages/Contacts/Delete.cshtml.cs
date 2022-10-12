@@ -9,6 +9,7 @@ using Authorizattion_exercise.Data;
 using Authorizattion_exercise.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Authorizattion_exercise.Authorization;
 
 namespace Authorizattion_exercise.Pages.Contacts
 {
@@ -49,18 +50,25 @@ namespace Authorizattion_exercise.Pages.Contacts
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.Contact == null)
+            var contact = await Context
+              .Contact.AsNoTracking()
+              .FirstOrDefaultAsync(m => m.ContactId == id);
+
+            if (contact == null)
             {
                 return NotFound();
             }
-            var contact = await _context.Contact.FindAsync(id);
 
-            if (contact != null)
+            var isAuthorized = await AuthorizationService.AuthorizeAsync(
+                                                     User, contact,
+                                                     ContactOperations.Delete);
+            if (!isAuthorized.Succeeded)
             {
-                Contact = contact;
-                _context.Contact.Remove(Contact);
-                await _context.SaveChangesAsync();
+                return Forbid();
             }
+
+            Context.Contact.Remove(contact);
+            await Context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Authorizattion_exercise.Authorization;
 using Authorizattion_exercise.Data;
 using Authorizattion_exercise.Models;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Authorizattion_exercise.Pages.Contacts
 {
@@ -31,16 +27,26 @@ namespace Authorizattion_exercise.Pages.Contacts
 
         [BindProperty]
         public Contact Contact { get; set; }
-        
+
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return Page();
             }
+            //new
+            Contact.OwnerID = UserManager.GetUserId(User);
 
+            var isAuthorized = await AuthorizationService.AuthorizeAsync(
+                                                        User, Contact,
+                                                        ContactOperations.Create);
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+            //end new
             _context.Contact.Add(Contact);
             await _context.SaveChangesAsync();
 
