@@ -7,16 +7,21 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Authorizattion_exercise.Data;
 using Authorizattion_exercise.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace Authorizattion_exercise.Pages.Contacts
 {
-    public class CreateModel : PageModel
+    public class CreateModel : DI_BasePageModel
     {
         private readonly Authorizattion_exercise.Data.ApplicationDbContext _context;
 
-        public CreateModel(Authorizattion_exercise.Data.ApplicationDbContext context)
+        public CreateModel(
+            ApplicationDbContext context,
+            IAuthorizationService authorizationService,
+            UserManager<IdentityUser> userManager)
+            : base(context, authorizationService, userManager)
         {
-            _context = context;
         }
 
         public IActionResult OnGet()

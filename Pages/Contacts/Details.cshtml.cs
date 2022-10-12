@@ -7,19 +7,24 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Authorizattion_exercise.Data;
 using Authorizattion_exercise.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace Authorizattion_exercise.Pages.Contacts
 {
-    public class DetailsModel : PageModel
+    public class DetailsModel : DI_BasePageModel
     {
         private readonly Authorizattion_exercise.Data.ApplicationDbContext _context;
 
-        public DetailsModel(Authorizattion_exercise.Data.ApplicationDbContext context)
+        public DetailsModel(
+           ApplicationDbContext context,
+           IAuthorizationService authorizationService,
+           UserManager<IdentityUser> userManager)
+           : base(context, authorizationService, userManager)
         {
-            _context = context;
         }
 
-      public Contact Contact { get; set; }
+        public Contact Contact { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {

@@ -8,16 +8,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Authorizattion_exercise.Data;
 using Authorizattion_exercise.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace Authorizattion_exercise.Pages.Contacts
 {
-    public class EditModel : PageModel
+    public class EditModel : DI_BasePageModel
     {
         private readonly Authorizattion_exercise.Data.ApplicationDbContext _context;
 
-        public EditModel(Authorizattion_exercise.Data.ApplicationDbContext context)
+        public EditModel(
+            ApplicationDbContext context,
+            IAuthorizationService authorizationService,
+            UserManager<IdentityUser> userManager)
+            : base(context, authorizationService, userManager)
         {
-            _context = context;
         }
 
         [BindProperty]

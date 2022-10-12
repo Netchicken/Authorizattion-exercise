@@ -1,19 +1,23 @@
-﻿using Authorizattion_exercise.Models;
+﻿using Authorizattion_exercise.Data;
+using Authorizattion_exercise.Models;
 
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Authorizattion_exercise.Pages.Contacts
 {
     [AllowAnonymous]
-    public class IndexModel : PageModel
+    public class IndexModel : DI_BasePageModel
     {
         private readonly Authorizattion_exercise.Data.ApplicationDbContext _context;
 
-        public IndexModel(Authorizattion_exercise.Data.ApplicationDbContext context)
+        public IndexModel(
+           ApplicationDbContext context,
+           IAuthorizationService authorizationService,
+           UserManager<IdentityUser> userManager)
+           : base(context, authorizationService, userManager)
         {
-            _context = context;
         }
 
         public IList<Contact> Contact { get; set; } = default!;
