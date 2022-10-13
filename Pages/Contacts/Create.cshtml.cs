@@ -10,7 +10,7 @@ namespace Authorizattion_exercise.Pages.Contacts
 {
     public class CreateModel : DI_BasePageModel
     {
-        private readonly Authorizattion_exercise.Data.ApplicationDbContext _context;
+      //  private readonly Authorizattion_exercise.Data.ApplicationDbContext _context;
 
         public CreateModel(
             ApplicationDbContext context,
@@ -47,8 +47,8 @@ namespace Authorizattion_exercise.Pages.Contacts
                 return Forbid();
             }
             //end new
-            _context.Contact.Add(Contact);
-            await _context.SaveChangesAsync();
+            Context.Contact.Add(Contact);
+            await Context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }

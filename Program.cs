@@ -1,3 +1,4 @@
+using Authorizattion_exercise.Authorization;
 using Authorizattion_exercise.Data;
 
 using Microsoft.AspNetCore.Authorization;
@@ -28,6 +29,15 @@ builder.Services.AddAuthorization(options =>
         .Build();
 });
 
+// Authorization handlers.
+builder.Services.AddScoped<IAuthorizationHandler,
+                      ContactIsOwnerAuthorizationHandler>();
+
+builder.Services.AddSingleton<IAuthorizationHandler,
+                      ContactAdministratorsAuthorizationHandler>();
+
+builder.Services.AddSingleton<IAuthorizationHandler,
+                      ContactManagerAuthorizationHandler>();
 
 
 var app = builder.Build();

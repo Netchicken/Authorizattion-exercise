@@ -3,3 +3,7 @@
 @using Authorizattion_exercise.Data
 @namespace Authorizattion_exercise.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Authorizattion_exercise.Authorization;
+@using Microsoft.AspNetCore.Authorization
+@using Authorizattion_exercise.Models
+@inject IAuthorizationService AuthorizationService

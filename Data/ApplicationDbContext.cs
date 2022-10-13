@@ -10,6 +10,6 @@ namespace Authorizattion_exercise.Data
             : base(options)
         {
         }
-        public DbSet<Authorizattion_exercise.Models.Contact> Contact { get; set; }
+        public DbSet<Contact> Contact { get; set; }
     }
 }
