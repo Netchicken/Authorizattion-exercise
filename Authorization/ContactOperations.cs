@@ -27,7 +27,9 @@ namespace Authorizattion_exercise.Authorization
         public static readonly string ApproveOperationName = "Approve";
         public static readonly string RejectOperationName = "Reject";
 
-        public static readonly string ContactAdministratorsRole =                                                          "ContactAdministrators";
+
+        // the roles that are held in the admin db
+        public static readonly string ContactAdministratorsRole = "ContactAdministrators";
         public static readonly string ContactManagersRole = "ContactManagers";
     }
 }

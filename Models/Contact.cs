@@ -1,8 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+
+using System.ComponentModel.DataAnnotations;
 
 namespace Authorizattion_exercise.Models
 {
-    public class Contact
+    public class Contact 
     {
         public int ContactId { get; set; }
         // user ID from AspNetUser table.

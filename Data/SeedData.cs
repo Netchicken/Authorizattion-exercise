@@ -10,7 +10,12 @@ namespace Authorizattion_exercise.Data
     //https://github.com/dotnet/AspNetCore.Docs/blob/main/aspnetcore/security/authorization/secure-data/samples/final6/Data/SeedData.cs
     public static class SeedData
     {
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="serviceProvider">this is ApplicationDbContext</param>
+        /// <param name="testUserPw"> from the secrets</param>
+        /// <returns></returns>
         public static async Task Initialize(IServiceProvider serviceProvider, string testUserPw)
         {
             using (var context = new ApplicationDbContext(
@@ -31,13 +36,23 @@ namespace Authorizattion_exercise.Data
                 SeedDB(context, adminID);
             }
         }
-        
-        private static async Task<string> EnsureUser(IServiceProvider serviceProvider,
-                                                    string testUserPw, string UserName)
+
+        /// <summary>
+        /// this creates the role for the seed
+        /// </summary>
+        /// <param name="serviceProvider">this is ApplicationDbContext or whatever name your context is</param>
+        /// <param name="testUserPw"></param>
+        /// <param name="UserName"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private static async Task<string> EnsureUser(IServiceProvider serviceProvider, string testUserPw, string UserName)
         {
+            //get the Identity User service
             var userManager = serviceProvider.GetService<UserManager<IdentityUser>>();
 
+            //does the person exist? 
             var user = await userManager.FindByNameAsync(UserName);
+            //No! make a new user
             if (user == null)
             {
                 user = new IdentityUser
@@ -91,6 +106,7 @@ namespace Authorizattion_exercise.Data
             return IR;
         }
 
+        //adminid is the person who entered the contact into the system
         public static void SeedDB(ApplicationDbContext context, string adminID)
         {
             if (context.Contact.Any())
