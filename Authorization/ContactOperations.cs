@@ -31,5 +31,6 @@ namespace Authorizattion_exercise.Authorization
         // the roles that are held in the admin db
         public static readonly string ContactAdministratorsRole = "ContactAdministrators";
         public static readonly string ContactManagersRole = "ContactManagers";
+        public static readonly string ContactStaffRole = "ContactStaff";
     }
 }
