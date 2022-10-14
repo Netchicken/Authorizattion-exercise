@@ -71,8 +71,7 @@ namespace Authorizattion_exercise.Data
             return user.Id;
         }
 
-        private static async Task<IdentityResult> EnsureRole(IServiceProvider serviceProvider,
-                                                                      string uid, string role)
+        private static async Task<IdentityResult> EnsureRole(IServiceProvider serviceProvider, string uid, string role)
         {
             var roleManager = serviceProvider.GetService<RoleManager<IdentityRole>>();
 

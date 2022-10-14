@@ -10,9 +10,7 @@ namespace Authorizattion_exercise.Authorization
       AuthorizationHandler<OperationAuthorizationRequirement, Contact>
     {
         protected override Task
-            HandleRequirementAsync(AuthorizationHandlerContext context,
-                                   OperationAuthorizationRequirement requirement,
-                                   Contact resource)
+            HandleRequirementAsync(AuthorizationHandlerContext context,OperationAuthorizationRequirement requirement,Contact resource)
         {
             if (context.User == null || resource == null)
             {
@@ -20,8 +18,7 @@ namespace Authorizattion_exercise.Authorization
             }
 
             // If not asking for approval/reject, return.
-            if (requirement.Name != Constants.ApproveOperationName &&
-                requirement.Name != Constants.RejectOperationName)
+            if (requirement.Name != Constants.ApproveOperationName && requirement.Name != Constants.RejectOperationName)
             {
                 return Task.CompletedTask;
             }

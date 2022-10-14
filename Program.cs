@@ -24,6 +24,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddAuthorization(options =>
 {
     //Setting the fallback policy is the preferred way to require all users be authenticated.
+    //https://learn.microsoft.com/en-us/aspnet/core/security/authorization/policies?view=aspnetcore-6.0
     options.FallbackPolicy = new AuthorizationPolicyBuilder()
         .RequireAuthenticatedUser()
         .Build();

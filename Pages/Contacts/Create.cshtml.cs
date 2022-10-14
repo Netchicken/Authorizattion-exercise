@@ -36,17 +36,19 @@ namespace Authorizattion_exercise.Pages.Contacts
             {
                 return Page();
             }
-            //new
+            //new this is the logged in user who is making this new person entry
             Contact.OwnerID = UserManager.GetUserId(User);
 
-            var isAuthorized = await AuthorizationService.AuthorizeAsync(
-                                                        User, Contact,
-                                                        ContactOperations.Create);
+            //is the person authorised to create a new person? - they can if they are logged in therefore their account is authorised
+            var isAuthorized = await AuthorizationService.AuthorizeAsync(User, Contact, ContactOperations.Create);
+            
+            //no! then return a 403
+
             if (!isAuthorized.Succeeded)
             {
                 return Forbid();
             }
-            //end new
+            //end new  otherise add the person in.
             Context.Contact.Add(Contact);
             await Context.SaveChangesAsync();
 

@@ -4,6 +4,10 @@ namespace Authorizattion_exercise.Authorization
 {
     public static class ContactOperations
     {
+
+        //see program.cs that teh only OperationAuthorizationRequirement it is checking for is that the user is authenticated
+        //Underneath the covers, role-based authorization and claims-based authorization use a requirement, a requirement handler, and a preconfigured policy. These building blocks support the expression of authorization evaluations in code. The result is a richer, reusable, testable authorization structure. https://learn.microsoft.com/en-us/aspnet/core/security/authorization/policies?view=aspnetcore-6.0
+
         public static OperationAuthorizationRequirement Create =
           new OperationAuthorizationRequirement { Name = Constants.CreateOperationName };
         public static OperationAuthorizationRequirement Read =
