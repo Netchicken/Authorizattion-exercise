@@ -151,7 +151,7 @@ namespace Authorizattion_exercise.Pages.Contacts
 
         private bool ContactExists(int id)
         {
-          return Context.Contact.Any(e => e.ContactId == id);
+          return _context.Contact.Any(e => e.ContactId == id);
         }
     }
 }

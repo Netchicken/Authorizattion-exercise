@@ -11,7 +11,7 @@ namespace Authorizattion_exercise.Data
     public static class SeedData
     {
         /// <summary>
-        /// ALL THIS SEEDS THE DATABASE WITH A COUPLE OF AMDINS AND SOME CONTACTS THAT THEY ENTERED
+        /// 
         /// </summary>
         /// <param name="serviceProvider">this is ApplicationDbContext</param>
         /// <param name="testUserPw"> from the secrets</param>
@@ -105,7 +105,7 @@ namespace Authorizattion_exercise.Data
 
             return IR;
         }
-     
+
         //adminid is the person who entered the contact into the system
         public static void SeedDB(ApplicationDbContext context, string adminID)
         {
