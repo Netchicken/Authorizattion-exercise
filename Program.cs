@@ -15,9 +15,15 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 
 //added .AddRoles<IdentityRole>()
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<IdentityUser>(options => 
+    options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders(); //added this
+
+
+
+
 builder.Services.AddRazorPages();
 
 //Set the fallback authorization policy to require users to be authenticated: The fallback authorization policy requires all users to be authenticated, except for Razor Pages, controllers, or action methods with an authorization attribute. For example, Razor Pages, controllers, or action methods with [AllowAnonymous] or [Authorize(PolicyName="MyPolicy")] use the applied authorization attribute rather than the fallback authorization policy.
@@ -39,7 +45,6 @@ builder.Services.AddSingleton<IAuthorizationHandler,
 
 builder.Services.AddSingleton<IAuthorizationHandler,
                       ContactManagerAuthorizationHandler>();
-
 
 var app = builder.Build();
 

@@ -15,11 +15,11 @@ namespace Authorizattion_exercise.Pages.Admin
             : base(context, authorizationService, userManager)
         {
         }
-          
+
         public void OnGet()
         {
-                      ViewData["data"] = UserManager.Users.ToList(); ;
-        
+            ViewData["data"] = UserManager.Users.ToList();
+            //  ViewData["moredata"] = UserManager.GetRolesAsync();
         }
     }
 }
