@@ -1,0 +1,25 @@
+﻿@page
+@model Authorizattion_exercise.Pages.Admin.DisplayModel
+@{
+}
+<div>
+    @if (ViewData["data"] !=null) 
+    {
+        @foreach (var item in ViewData["data"] as IList<string>)
+        {
+            @item
+        }
+
+
+
+
+
+}
+else
+            {
+
+        <h2>No Data</h2>
+            }
+
+
+</div>
