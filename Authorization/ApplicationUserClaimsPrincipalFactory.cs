@@ -6,14 +6,15 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace ProCodeGuide.Sample.Blog.Areas.Identity.Data
+namespace Authorizattion_exercise.Authorization
 {
     public class ApplicationUserClaimsPrincipalFactory : UserClaimsPrincipalFactory<SampleAppUser>
     {
         public ApplicationUserClaimsPrincipalFactory(
             UserManager<SampleAppUser> userManager,
+           
             IOptions<IdentityOptions> options
-            ) : base(userManager, options)
+            ) : base(userManager,  options)
         {
 
         }

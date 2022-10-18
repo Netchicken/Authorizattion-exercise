@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -46,7 +47,12 @@ builder.Services.AddSingleton<IAuthorizationHandler,
 builder.Services.AddSingleton<IAuthorizationHandler,
                       ContactManagerAuthorizationHandler>();
 
+builder.Services.AddScoped<IUserClaimsPrincipalFactory<SampleAppUser>,
+                   ApplicationUserClaimsPrincipalFactory>();  //added this 
+
 var app = builder.Build();
+
+//Unable to resolve service for type 'Microsoft.AspNetCore.Identity.UserManager`1[Authorizattion_exercise.Authorization.SampleAppUser]' while attempting to activate 'Authorizattion_exercise.Authorization.ApplicationUserClaimsPrincipalFactory'.)'
 
 
 //If a strong password is not specified, an exception is thrown when SeedData.Initialize is called.

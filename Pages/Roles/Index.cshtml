@@ -1,5 +1,6 @@
 ﻿@page
-@model Authorizattion_exercise.Pages.Roles.IndexModel
+@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
+@*@model Authorizattion_exercise.Pages.Roles.IndexModel*@
 @{
 }
 
@@ -13,7 +14,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var role in Model.Roles)
+        @foreach (var role in Model)
         {
             <tr>
                 <td>@role.Id</td>

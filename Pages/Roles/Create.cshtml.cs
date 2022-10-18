@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Authorizattion_exercise.Pages.Roles
 {
+
+    //@model Authorizattion_exercise.Pages.Roles.CreateModel
+
     public class CreateModel : PageModel
     {
 
