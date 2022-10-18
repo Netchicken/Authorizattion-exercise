@@ -1,9 +1,13 @@
 ﻿@page
 @model Authorizattion_exercise.Pages.Admin.DisplayModel
 @{
+    ViewData["Title"] = "Display";
 }
+
 <div>
-    @if (ViewData["data"] !=null) 
+    <h2>Display all members</h2>
+
+    @if (ViewData["data"] != null)
     {
         @foreach (var item in ViewData["data"] as IList<string>)
         {
@@ -14,12 +18,12 @@
 
 
 
-}
-else
-            {
+    }
+    else
+    {
 
         <h2>No Data</h2>
-            }
+    }
 
 
 </div>
