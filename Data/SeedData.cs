@@ -10,14 +10,13 @@ namespace Authorizattion_exercise.Data
     //https://github.com/dotnet/AspNetCore.Docs/blob/main/aspnetcore/security/authorization/secure-data/samples/final6/Data/SeedData.cs
     public static class SeedData
     {
-        /// <summary>
-        /// 
-        /// </summary>
+        
         /// <param name="serviceProvider">this is ApplicationDbContext</param>
         /// <param name="testUserPw"> from the secrets</param>
         /// <returns></returns>
         public static async Task Initialize(IServiceProvider serviceProvider, string testUserPw)
         {
+         
             using (var context = new ApplicationDbContext(
                 serviceProvider.GetRequiredService<DbContextOptions<ApplicationDbContext>>()))
             {

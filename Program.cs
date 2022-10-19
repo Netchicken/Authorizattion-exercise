@@ -18,7 +18,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 //added .AddRoles<IdentityRole>()
 builder.Services.AddDefaultIdentity<IdentityUser>(options => 
     options.SignIn.RequireConfirmedAccount = true)
-    .AddRoles<IdentityRole>()
+    .AddRoles<IdentityRole>()   //added to use roles
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders(); //added this
 
@@ -47,8 +47,8 @@ builder.Services.AddSingleton<IAuthorizationHandler,
 builder.Services.AddSingleton<IAuthorizationHandler,
                       ContactManagerAuthorizationHandler>();
 
-builder.Services.AddScoped<IUserClaimsPrincipalFactory<SampleAppUser>,
-                   ApplicationUserClaimsPrincipalFactory>();  //added this 
+//builder.Services.AddScoped<IUserClaimsPrincipalFactory<SampleAppUser>,
+//                   ApplicationUserClaimsPrincipalFactory>();  //added this 
 
 var app = builder.Build();
 
@@ -67,7 +67,7 @@ using (var scope = app.Services.CreateScope())
     // dotnet user-secrets set SeedUserPW <pw>
 
     var testUserPw = builder.Configuration.GetValue<string>("SeedUserPW");
-
+    //run the seed data that populates the roles etc
     await SeedData.Initialize(services, testUserPw);
 }
 
