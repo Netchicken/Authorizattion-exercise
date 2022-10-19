@@ -1,14 +1,14 @@
-﻿@page
-@model CityBreaks.Pages.RolesManager.CreateModel
+﻿@page 
+@model  Authorizattion_exercise.Pages.RolesManager.CreateModel
 @{
-	ViewData["Title"] = "Create Role";
+    ViewData["Title"] = "Create Role";
 }
 <h4>Create Role</h4>
 
 <div class="row">
     <div class="col-md-8">
         <form method="post">
-              <div class="form-group mb-3">
+            <div class="form-group mb-3">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
@@ -21,5 +21,5 @@
 </div>
 
 @section scripts{
-<partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial" />
 }

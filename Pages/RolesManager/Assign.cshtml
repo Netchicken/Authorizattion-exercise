@@ -1,5 +1,5 @@
 ﻿@page
-@model CityBreaks.Pages.RolesManager.AssignModel
+@model Authorizattion_exercise.Pages.RolesManager.AssignModel
 @{
 }
 <h4>Assign User To Role</h4>
@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col-md-8">
         <form method="post">
-              <div class="form-group mb-3">
+            <div class="form-group mb-3">
                 <label asp-for="SelectedUser" class="control-label"></label>
                 <select asp-for="SelectedUser" asp-items="Model.Users" class="form-control">
                     <option></option>
@@ -29,5 +29,5 @@
 </div>
 
 @section scripts{
-<partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial" />
 }

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace CityBreaks.Pages.RoleManager
+namespace Authorizattion_exercise.Pages.RoleManager
 {
     public class IndexModel : PageModel
     {
