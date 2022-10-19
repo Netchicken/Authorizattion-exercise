@@ -18,30 +18,6 @@ namespace Authorizattion_exercise.Data
         {
         }
 
-        //protected override void OnModelCreating(ModelBuilder builder)
-        //{
-        //    base.OnModelCreating(builder);
-
-        //    builder.Entity<User>(builder =>
-        //    {
-
-        //        builder.HasMany(u => u.UserRoles)
-        //                .WithOne(ur => ur.User)
-        //                .HasForeignKey(ur => ur.UserId)
-        //        .IsRequired();
-        //    });
-
-        //    builder.Entity<Authorization.Role>(builder =>
-        //    {
-
-        //        builder.HasMany(r => r.UserRoles)
-        //                .WithOne(ur => ur.Role)
-        //                .HasForeignKey(ur => ur.RoleId)
-        //                .IsRequired();
-
-        //    });
-        //}
-
 
 
         public DbSet<Contact> Contact { get; set; }

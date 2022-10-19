@@ -1,9 +1,11 @@
 using Authorizattion_exercise.Authorization;
 using Authorizattion_exercise.Data;
 
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,9 +18,19 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 
 //added .AddRoles<IdentityRole>()
-builder.Services.AddDefaultIdentity<IdentityUser>(options => 
-    options.SignIn.RequireConfirmedAccount = true)
-    .AddRoles<IdentityRole>()   //added to use roles
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+  {
+      options.SignIn.RequireConfirmedAccount = false;
+      options.Password.RequireDigit = false;
+      options.Password.RequireLowercase = false;
+      options.Password.RequireNonAlphanumeric = false;
+      options.Password.RequireUppercase = false;
+
+
+  }
+
+    )
+      .AddRoles<IdentityRole>()   //added to use roles
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders(); //added this
 
@@ -37,6 +49,12 @@ builder.Services.AddAuthorization(options =>
         .Build();
 });
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+{
+    options.LoginPath = "/Account/Login"; //default
+  //  options.LoginPath = "/Login";
+});
+
 // Authorization handlers.
 builder.Services.AddScoped<IAuthorizationHandler,
                       ContactIsOwnerAuthorizationHandler>();
@@ -47,12 +65,11 @@ builder.Services.AddSingleton<IAuthorizationHandler,
 builder.Services.AddSingleton<IAuthorizationHandler,
                       ContactManagerAuthorizationHandler>();
 
-//builder.Services.AddScoped<IUserClaimsPrincipalFactory<SampleAppUser>,
-//                   ApplicationUserClaimsPrincipalFactory>();  //added this 
+
 
 var app = builder.Build();
 
-//Unable to resolve service for type 'Microsoft.AspNetCore.Identity.UserManager`1[Authorizattion_exercise.Authorization.SampleAppUser]' while attempting to activate 'Authorizattion_exercise.Authorization.ApplicationUserClaimsPrincipalFactory'.)'
+
 
 
 //If a strong password is not specified, an exception is thrown when SeedData.Initialize is called.
